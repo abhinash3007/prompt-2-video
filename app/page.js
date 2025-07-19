@@ -4,7 +4,7 @@ import Header from "./_component/Header";
 
 export default function Home() {
   return (
-    <div className="md:p-16 lg-p-24 xl-36">
+    <div className="md:px-16 lg:px-24 xl:px-36">
       <Header />
       <Hero />
     </div>
