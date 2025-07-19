@@ -1,19 +1,35 @@
 "use client"
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/configs/firebaseConfigs'
+import { AuthContext } from './_context/AuthContext'
 
 function Provider({ children }) {
+    const [user,setUser]=useState()
+    useEffect(() => {
+        const unSuscribe = onAuthStateChanged(auth, (user) => {
+            console.log(user);
+            setUser(user);
+        })
+        return () => unSuscribe();
+    }, []);
     return (
         <div>
-            <NextThemesProvider
-                attribute="class"
-                defaultTheme="dark"
-                enableSystem
-                disableTransitionOnChange>
-                {children}
-            </NextThemesProvider>
+            <AuthContext.Provider value={{user}}>
+                <NextThemesProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem
+                    disableTransitionOnChange>
+                    {children}
+                </NextThemesProvider>
+            </AuthContext.Provider>
         </div>
     )
 }
-
+export const useAuthContext=()=>{
+    const context=useContext(AuthContext);
+    return context;
+}
 export default Provider
