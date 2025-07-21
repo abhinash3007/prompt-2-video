@@ -15,9 +15,10 @@ function Header() {
                 <h2 className='text-2xl font-bold'>Prompt 2 Video</h2>
             </div>
             <div>
-                {!user ? <Authentication >
-                    <Button>Get Started</Button>
-                </Authentication>
+                {!user ?
+                    <Authentication >
+                        <Button>Get Started</Button>
+                    </Authentication>
 
                     : <div className='flex items-center gap-3'>
                         <Link href={'/dashboard'}>
